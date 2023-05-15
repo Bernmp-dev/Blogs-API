@@ -40,8 +40,24 @@ const listUsers = async () => {
   return result;
 };
 
+const findUserById = async (id) => {
+  const result = await sequelize.transaction(async (t) => {
+    const user = await User.findByPk(id, {
+       attributes: { exclude: ['password'] } }, { transaction: t });
+
+    return user;
+  });
+
+  if (result === null) {
+    throw new Error('User does not exist');
+  }
+
+  return result;
+};
+
 module.exports = {
   findOrCreateUser,
   findByEmail,
   listUsers,
+  findUserById,
 };

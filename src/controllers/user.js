@@ -25,8 +25,19 @@ const listUsers = async (req, res) => {
   }
 };
 
+const findUserById = async ({ params: { id } }, res) => {
+  try {
+    const user = await userService.findUserById(id);
+    
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
 module.exports = {
   login,
   createUser,
   listUsers,
+  findUserById,
 };
