@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { userService } = require('../services');
 
-const secret = process.env.JWT_SECRET || 'seusecretdetoken';
+const secret = process.env.JWT_SECRET;
 
 const jwtConfig = {
   algorithm: 'HS256',
@@ -9,18 +9,15 @@ const jwtConfig = {
 
 const createToken = async (req, res, next) => {
   try {
-    const userId = await userService.login(req.body);
-
-    if (!userId) {
-      return res.status(404).json({ message: 'Usuário não encontrado.' });
-    }
+    const userId = await userService.findOrCreateUser(req.body);
+    
     const token = jwt.sign({ userId }, secret, jwtConfig);
 
     req.token = token;
 
     next();
   } catch (error) {
-    return res.status(400).json({ message: 'Invalid fields' });
+    return res.status(400).json({ message: 'Token creation failure, invalid fields' });
   }
 };
 
@@ -28,7 +25,7 @@ const authToken = (req, res, next) => {
   const token = req.headers.authorization;
 
   if (!token) {
-    return res.status(401).json({ message: 'Token não fornecido.' });
+    return res.status(401).json({ message: 'Token not found' });
   }
 
   try {
@@ -38,7 +35,7 @@ const authToken = (req, res, next) => {
 
     next();
   } catch (error) {
-    return res.status(401).json({ message: 'Token inválido ou expirado.' });
+    return res.status(401).json({ message: 'Expired or invalid token' });
   }
 };
 
