@@ -21,9 +21,20 @@ const findOrCreateUser = async ({ displayName, email, password, image }) => {
 const findByEmail = async ({ email }) => {
   const result = await sequelize.transaction(async (t) => {
     const user = await User
-      .findOne({ where: { email } }, { transaction: t });
+      .findOne({ where: { email }, transaction: t });
     
     return Boolean(user);
+  });
+
+  return result;
+};
+
+const listUsers = async () => {
+  const result = await sequelize.transaction(async (t) => {
+    const usersList = await User.findAll({
+       attributes: { exclude: ['password'] }, transaction: t });
+    
+    return usersList;
   });
 
   return result;
@@ -32,4 +43,5 @@ const findByEmail = async ({ email }) => {
 module.exports = {
   findOrCreateUser,
   findByEmail,
+  listUsers,
 };

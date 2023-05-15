@@ -19,6 +19,8 @@ app.post('/login', loginValidate, jwt.createToken, userController.login);
 
 app.post('/user', emailValidate, jwt.createToken, userController.createUser);
 
+app.get('/user', jwt.authToken, userController.listUsers);
+
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`
 module.exports = app;
