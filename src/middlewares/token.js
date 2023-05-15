@@ -17,7 +17,7 @@ const createToken = async (req, res, next) => {
 
     next();
   } catch (error) {
-    return res.status(400).json({ message: 'Token creation failure, invalid fields' });
+    return res.status(400).json({ message: 'Invalid fields' });
   }
 };
 
