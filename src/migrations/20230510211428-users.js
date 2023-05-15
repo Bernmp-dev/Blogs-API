@@ -25,7 +25,6 @@ module.exports = {
       },
       image: {
         type: DataTypes.STRING,
-        allowNull: false
       },
     });
   },
