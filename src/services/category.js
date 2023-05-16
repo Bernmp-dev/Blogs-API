@@ -13,6 +13,17 @@ const findOrCreateCategory = async ({ name }) => {
   return result;
 };
 
+const listCategories = async () => {
+  const result = await sequelize.transaction(async (t) => {
+    const categoriesList = await Category.findAll({ transaction: t });
+
+    return categoriesList;
+  });
+
+  return result;
+};
+
 module.exports = {
   findOrCreateCategory,
+  listCategories,
 };
