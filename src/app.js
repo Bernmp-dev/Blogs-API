@@ -25,6 +25,8 @@ app.get('/user/:id', jwt.authToken, userController.findUserById);
 
 app.post('/categories', jwt.authToken, categoryValidate, categoryController.createCategory);
 
+app.get('/categories', jwt.authToken, categoryController.listCategories);
+
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`
 module.exports = app;
