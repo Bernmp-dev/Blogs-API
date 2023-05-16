@@ -1,6 +1,8 @@
 const express = require('express');
-const { userController, categoryController } = require('./controllers');
-const { jwt, loginValidate, emailValidate, categoryValidate } = require('./middlewares');
+const { userController, categoryController, blogPostController } = require('./controllers');
+const midd = require('./middlewares');
+
+const { jwt } = midd;
 
 // ...
 
@@ -15,17 +17,19 @@ app.use(express.json());
 
 // ...
 
-app.post('/login', loginValidate, jwt.createToken, userController.login);
+app.post('/login', midd.loginValidate, jwt.createToken, userController.login);
 
-app.post('/user', emailValidate, jwt.createToken, userController.createUser);
+app.post('/user', midd.emailValidate, jwt.createToken, userController.createUser);
 
 app.get('/user', jwt.authToken, userController.listUsers);
 
 app.get('/user/:id', jwt.authToken, userController.findUserById);
 
-app.post('/categories', jwt.authToken, categoryValidate, categoryController.createCategory);
+app.post('/categories', jwt.authToken, midd.categoryValidate, categoryController.createCategory);
 
 app.get('/categories', jwt.authToken, categoryController.listCategories);
+
+app.post('/post', jwt.authToken, midd.postValidate, blogPostController.createPost);
 
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`
