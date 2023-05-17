@@ -43,9 +43,19 @@ const createPostSchema = Joi.object({
   'string.empty': emptyField,
 });
 
+const updatePostSchema = Joi.object({
+  title: Joi.string().required(),
+  content: Joi.string().required(),
+}).required().messages({
+  'any.required': emptyField,
+  'any.empty': emptyField,
+  'string.empty': emptyField,
+});
+
 module.exports = {
   loginSchema,
   createUserSchema,
   createCategorySchema,
   createPostSchema,
+  updatePostSchema,
 };

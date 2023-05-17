@@ -3,6 +3,7 @@ const loginValidate = require('./loginValidate');
 const emailValidate = require('./emailValidate');
 const categoryValidate = require('./categoryValidate');
 const postValidate = require('./postValidate');
+const verifyUserPost = require('./verifyUserPost');
 
 module.exports = {
   jwt,
@@ -10,4 +11,5 @@ module.exports = {
   emailValidate,
   categoryValidate,
   postValidate,
+  verifyUserPost,
 };
