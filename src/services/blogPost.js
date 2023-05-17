@@ -67,8 +67,29 @@ const listPostsById = async (id) => {
   return result;
 };
 
+const updatePost = async (id, { title, content }) => {
+  const result = await sequelize.transaction(async (t) => {
+  const [updatedRows] = await BlogPost.update(
+    { title, content },
+    { where: { id } },
+    { transaction: t },
+  );
+
+  if (updatedRows === 0) {
+    throw new Error('Post does not exist');
+  }
+
+  const updatedPost = await listPostsById(id);
+  
+  return updatedPost;
+});
+
+ return result;
+};
+
 module.exports = {
   findOrCreatePost,
   listPosts,
   listPostsById,
+  updatePost,
 };
