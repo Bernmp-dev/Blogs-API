@@ -43,7 +43,7 @@ const listUsers = async () => {
 const findUserById = async (id) => {
   const result = await sequelize.transaction(async (t) => {
     const user = await User.findByPk(id, {
-       attributes: { exclude: ['password'] } }, { transaction: t });
+       attributes: { exclude: ['password'] }, transaction: t });
 
     return user;
   });
