@@ -33,6 +33,8 @@ app.post('/post', jwt.authToken, midd.postValidate, blogPostController.createPos
 
 app.get('/post', jwt.authToken, blogPostController.listPosts);
 
+app.get('/post/:id', jwt.authToken, blogPostController.listPostsById);
+
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`
 module.exports = app;

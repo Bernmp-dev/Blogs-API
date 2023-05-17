@@ -48,7 +48,27 @@ const listPosts = async () => {
   return result;
 };
 
+const listPostsById = async (id) => {
+  const result = await sequelize.transaction(async (t) => {
+    const postById = await BlogPost.findByPk(id, {
+      include: [
+        { model: User, as: 'user', attributes: { exclude: 'password' } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+      transaction: t });
+      
+      return postById;
+    });
+    
+    if (!result) {
+      throw new Error('Post does not exist');
+    }
+
+  return result;
+};
+
 module.exports = {
   findOrCreatePost,
   listPosts,
+  listPostsById,
 };

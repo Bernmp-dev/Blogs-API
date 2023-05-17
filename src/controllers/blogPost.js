@@ -18,7 +18,17 @@ const listPosts = async (req, res) => {
   }
 };
 
+const listPostsById = async ({ params: { id } }, res) => {
+  try {
+    const postById = await blogPostService.listPostsById(id);
+    res.status(200).json(postById);
+  } catch ({ message }) {
+    res.status(404).json({ message });
+  }
+};
+
 module.exports = {
   createPost,
   listPosts,
+  listPostsById,
 };
