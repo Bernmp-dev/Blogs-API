@@ -27,8 +27,18 @@ const listPostsById = async ({ params: { id } }, res) => {
   }
 };
 
+const updatePost = async ({ params: { id }, body }, res) => {
+  try {
+    const updatedPost = await blogPostService.updatePost(id, body);
+    res.status(200).json(updatedPost);
+  } catch ({ message }) {
+    res.status(401).json({ message });
+  }
+};
+
 module.exports = {
   createPost,
   listPosts,
   listPostsById,
+  updatePost,
 };
