@@ -9,8 +9,8 @@ const loginSchema = Joi.object({
   'string.base': '{{#key}} must be a string',
 });
 
-module.exports = (req, res, next) => {
-  const { error } = loginSchema.validate(req.body);
+module.exports = ({ body }, res, next) => {
+  const { error } = loginSchema.validate(body);
 
   if (error) {
     const { message } = error;

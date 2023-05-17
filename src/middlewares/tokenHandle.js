@@ -4,6 +4,7 @@ const { userService } = require('../services');
 const secret = process.env.JWT_SECRET;
 
 const jwtConfig = {
+  expiresIn: '7d',
   algorithm: 'HS256',
 };
 
@@ -22,13 +23,13 @@ const createToken = async (req, res, next) => {
 };
 
 const authToken = (req, res, next) => {
-  const token = req.headers.authorization;
-
-  if (!token) {
-    return res.status(401).json({ message: 'Token not found' });
-  }
-
   try {
+    const token = req.headers.authorization;
+    
+    if (!token) {
+      return res.status(401).json({ message: 'Token not found' });
+    }
+
     const decoded = jwt.verify(token, secret);
 
     req.userId = decoded.userId;

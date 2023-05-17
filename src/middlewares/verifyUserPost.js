@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
   const { userId, params: { id }, body } = req;
   const { user } = await blogPostService.listPostsById(id);
 
-  if (userId !== user.id) {
+  if (+userId !== +user.id) {
     return res.status(401).json({ message: 'Unauthorized user' });
   }
 
