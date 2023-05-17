@@ -1,4 +1,4 @@
-const jwt = require('./token');
+const jwt = require('./tokenHandle');
 const loginValidate = require('./loginValidate');
 const emailValidate = require('./emailValidate');
 const categoryValidate = require('./categoryValidate');
