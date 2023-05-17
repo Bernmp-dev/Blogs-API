@@ -1,6 +1,4 @@
-const sequelize = require('../transactions');
-
-const { User } = require('../models');
+const { User, sequelize } = require('../models');
 
 const findOrCreateUser = async ({ displayName, email, password, image }) => {
   const result = await sequelize.transaction(async (t) => {
