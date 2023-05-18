@@ -56,12 +56,14 @@ const listPostsById = async (id) => {
         { model: Category, as: 'categories', through: { attributes: [] } },
     ],
       transaction: t });
-      
+
       return postById;
     });
-    
+
     if (!result) {
-      throw new Error('Post does not exist');
+      const error = new Error('Post does not exist');
+      error.type = 404;
+      throw error;
     }
 
   return result;
@@ -69,15 +71,11 @@ const listPostsById = async (id) => {
 
 const updatePost = async (id, { title, content }) => {
   const result = await sequelize.transaction(async (t) => {
-  const [updatedRows] = await BlogPost.update(
+  await BlogPost.update(
     { title, content },
     { where: { id } },
     { transaction: t },
   );
-
-  if (updatedRows === 0) {
-    throw new Error('Post does not exist');
-  }
 
   const updatedPost = await listPostsById(id);
   
@@ -87,9 +85,18 @@ const updatePost = async (id, { title, content }) => {
  return result;
 };
 
+const deletePost = async (id) => {
+  await sequelize.transaction(async (t) => {
+    const response = await BlogPost.destroy({ where: { id } }, { transaction: t });
+
+    console.log(response);
+  });
+};
+
 module.exports = {
   findOrCreatePost,
   listPosts,
   listPostsById,
   updatePost,
+  deletePost,
 };
