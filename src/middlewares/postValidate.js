@@ -14,23 +14,27 @@ const createPostSchema = Joi.object({
 });
 
 module.exports = async ({ body: post }, res, next) => {
-  const categoriesList = await categoryService.listCategories();
+  try {
+    const categoriesList = await categoryService.listCategories();
   
-  const databaseIds = categoriesList.map(({ id }) => id);
+    const databaseIds = categoriesList.map(({ id }) => id);
+    
+    const checkIds = post.categoryIds
+      .every((postId) => databaseIds.includes(postId));
+    
+    if (!checkIds) {
+      return res.status(400).json({
+         message: 'one or more "categoryIds" not found' });
+    }
+    
+    const { error } = createPostSchema.validate(post);
+    if (error) {
+      const { message } = error;
+      return res.status(400).json({ message });
+    }
   
-  const checkIds = post.categoryIds
-    .every((postId) => databaseIds.includes(postId));
-  
-  if (!checkIds) {
-    return res.status(400).json({
-       message: 'one or more "categoryIds" not found' });
+    return next(); 
+  } catch ({ message }) {
+    return res.status(500).json({ message }); 
   }
-  
-  const { error } = createPostSchema.validate(post);
-  if (error) {
-    const { message } = error;
-    return res.status(400).json({ message });
-  }
-
-  return next();
 };

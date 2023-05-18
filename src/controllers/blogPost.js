@@ -39,7 +39,16 @@ const updatePost = async ({ params: { id }, body }, res) => {
 const deletePost = async ({ params: { id } }, res) => {
   try {
     await blogPostService.deletePost(id);
-    res.status(204).json({});
+    res.sendStatus(204);
+  } catch ({ message }) {
+    res.status(500).json({ message });
+  }
+};
+
+const listBySearch = async ({ query: { q } }, res) => {
+  try {
+    const result = await blogPostService.listBySearch(q);
+    res.status(200).json(result);
   } catch ({ message }) {
     res.status(500).json({ message });
   }
@@ -51,4 +60,5 @@ module.exports = {
   listPostsById,
   updatePost,
   deletePost,
+  listBySearch,
 };

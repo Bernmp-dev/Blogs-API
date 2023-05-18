@@ -14,18 +14,22 @@ const createUserSchema = Joi.object({
 });
 
 module.exports = async ({ body }, res, next) => {
-  const { error } = createUserSchema.validate(body);
+  try {
+    const { error } = createUserSchema.validate(body);
 
-  if (error) {
-    const { message } = error;
-    return res.status(400).json({ message });
+    if (error) {
+      const { message } = error;
+      return res.status(400).json({ message });
+    }
+  
+    const emailRegistered = await userService.findByEmail(body);
+  
+    if (emailRegistered) {
+      return res.status(409).json({ message: 'User already registered' });
+    }
+  
+    return next();
+  } catch ({ message }) {
+    return res.status(500).json({ message });
   }
-
-  const emailRegistered = await userService.findByEmail(body);
-
-  if (emailRegistered) {
-    return res.status(409).json({ message: 'User already registered' });
-  }
-
-  return next();
 };
