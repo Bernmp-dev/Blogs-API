@@ -36,9 +36,19 @@ const updatePost = async ({ params: { id }, body }, res) => {
   }
 };
 
+const deletePost = async ({ params: { id } }, res) => {
+  try {
+    await blogPostService.deletePost(id);
+    res.status(204).json({});
+  } catch ({ message }) {
+    res.status(500).json({ message });
+  }
+};
+
 module.exports = {
   createPost,
   listPosts,
   listPostsById,
   updatePost,
+  deletePost,
 };

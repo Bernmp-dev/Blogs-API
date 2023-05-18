@@ -35,7 +35,15 @@ app.get('/post', jwt.authToken, blogPostController.listPosts);
 
 app.get('/post/:id', jwt.authToken, blogPostController.listPostsById);
 
-app.put('/post/:id', jwt.authToken, midd.verifyUserPost, blogPostController.updatePost);
+app.put(
+  '/post/:id',
+  jwt.authToken,
+  midd.verifyUserPost,
+  midd.updateValidate,
+  blogPostController.updatePost,
+  );
+
+app.delete('/post/:id', jwt.authToken, midd.verifyUserPost, blogPostController.deletePost);
 
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`
