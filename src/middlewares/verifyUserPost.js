@@ -1,8 +1,7 @@
 const { blogPostService } = require('../services');
 
-module.exports = async (req, res, next) => {
+module.exports = async ({ userId, params: { id } }, res, next) => {
   try {
-    const { userId, params: { id } } = req;
     const response = await blogPostService.listPostsById(id);
    
     const { user } = response;

@@ -53,9 +53,16 @@ const findUserById = async (id) => {
   return result;
 };
 
+const deleteMyUser = async (id) => {
+  sequelize.transaction(async (t) => {
+    await User.destroy({ where: { id }, transaction: t });
+  });
+};
+
 module.exports = {
   findOrCreateUser,
   findByEmail,
   listUsers,
   findUserById,
+  deleteMyUser,
 };
