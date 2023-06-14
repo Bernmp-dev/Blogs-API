@@ -6,7 +6,7 @@
 
 <br />
 
-# API de Blog - Projeto Backend
+# Blogs API - Projeto Backend
 
 Este é um projeto de backend para API de um blog, desenvolvido usando Node.js e o framework Express. Ele fornece endpoints para criar, listar, atualizar e excluir usuários, categorias e postagens de um blog.
 
