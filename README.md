@@ -70,17 +70,15 @@ Antes de executar o projeto, verifique se você possui o seguinte instalado em s
 
   - Ele te dará acesso ao terminal interativo do container criado pelo compose, que está rodando em segundo plano.
 
-  > Instale as dependências [**Caso existam**] com `npm install`. (Instale dentro do container)
+  > Instale as dependências com `npm install`. (Instale dentro do container)
   
   - Caso opte por utilizar o Docker, **TODOS** os comandos disponíveis no `package.json` (npm start, npm test, npm run dev, ...) devem ser executados **DENTRO** do container, ou seja, no terminal que aparece após a execução do comando `docker exec` citado acima. 
-
-  - O **git** dentro do container não vem configurado com suas credenciais. Ou faça os commits fora do container, ou configure as suas credenciais do git dentro do container.
 
 <br />
   
   ## Sem Docker
 
-  > Instale as dependências [**Caso existam**] com `npm install`
+  > Instale as dependências com `npm install`
   
   - Lembre-se de usar o prefixo `env $(cat .env)` ao rodar os comandos localmente para carregar as variáveis de ambiente do arquivo `.env`. Por exemplo:
   
