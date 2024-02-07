@@ -56,8 +56,6 @@ Antes de executar o projeto, verifique se você possui o seguinte instalado em s
 
 ## Com Docker
 
-  - Antes de começar, seu docker-compose precisa estar na versão 1.29 ou superior. [Veja aqui](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04-pt) ou [na documentação](https://docs.docker.com/compose/install/) como instalá-lo. No primeiro artigo, você pode substituir onde está com `1.26.0` por `1.29.2`.
-
  > Rode os serviços `node` e `db` com o comando `docker-compose up -d --build`.
 
   - Lembre-se de parar o `mysql` se estiver usando localmente na porta padrão (`3306`), ou adapte, caso queria fazer uso da aplicação em containers;
